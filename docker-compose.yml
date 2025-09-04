@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: nocobase
+    image: nocobase/nocobase:latest
+    depends_on:
+      - db
+    environment:
+      - APP_KEY=very-secret-sercet-key
+      - DB_DIALECT=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=nocobase
+      - DB_USER=nocobase
+      - DB_PASSWORD=nocobase
+      - TZ=Asia/Tehran
+    volumes:
+      - ./storage:/app/nocobase/storage
+    ports:
+      - "13000:80"
+
+  db:
+    container_name: nocobase-db
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=nocobase
+      - POSTGRES_PASSWORD=nocobase
+      - POSTGRES_DB=nocobase
+    volumes:
+      - ./storage/db/postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"   # avoid conflict with your host PostgreSQL
