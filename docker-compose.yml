@@ -6,6 +6,7 @@ services:
     image: nocobase/nocobase:latest
     depends_on:
       - db
+    restart: always
     environment:
       - APP_KEY=very-secret-sercet-key
       - DB_DIALECT=postgres
